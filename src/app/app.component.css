@@ -1,0 +1,13 @@
+.backgroundBg{
+  background-image: url(../assets/CantinaEmpty.png);
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
+.backgroundBg2{
+  background-image: url(../assets/CantinaBusy.png);
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100vh;
+}
