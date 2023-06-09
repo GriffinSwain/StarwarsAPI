@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { DatafetchService } from './services/datafetch.service';
-
-function DataFetch(http: HttpClient) {
-  return new DatafetchService(http);
-}
+import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +15,13 @@ export class AppComponent implements OnInit {
   music1: HTMLAudioElement;
   music2: HTMLAudioElement;
   bodyClass: string;
+  searchType: string;
 
   constructor(private datafetchService: DatafetchService) {
     this.music1 = new Audio('../assets/CantinaBand.mp3');
     this.music2 = new Audio('../assets/CantinaBand2.mp3');
     this.bodyClass = 'backgroundBg';
+    this.searchType = "index";
   }
 
   ngOnInit(): void {}
@@ -49,5 +49,10 @@ export class AppComponent implements OnInit {
   stopAllAudio() {
     this.music1.pause();
     this.music2.pause();
+  }
+
+  onDropdownChange(query: any){
+    this.searchType = query.target.value;
+    console.log(this.searchType);
   }
 }

@@ -1,10 +1,14 @@
 <body [ngClass]="bodyClass">
-
-  <input type="text" placeholder="search field">
-  <input type="text" placeholder="index">
-  <button (click)="searchByIndex('people', 5)">Search by index number</button>
-  <button (click)="searchByName('people', 'O')">Search by name</button>
+<div class="columns-5"></div>
+<div class="container px-40 mt-5">
+  <select (change)="onDropdownChange($event)">
+    <option selected value="index">Index</option>
+    <option value="name">Name</option>
+  </select>
+  <button mat-button class="star-wars-button" (click)="searchByIndex('people', 5)">Peruse Persons</button>
+  <button mat-button class="star-wars-button" (click)="searchByName('people', 'O')">Planet Probe</button>
+  <button mat-button class="star-wars-button" (click)="searchByName('people', 'O')">Starship Search</button>
   <data-table></data-table>
-  <router-outlet></router-outlet>
+</div>
 
 </body>

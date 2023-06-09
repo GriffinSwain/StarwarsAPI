@@ -18,10 +18,16 @@ export class DatafetchService {
     // .subscribe();
   }
 
-  getDataByIndex(datatype: string, input: number): Observable<any>{
+  getDataByPages(datatype: string, page: number): Observable<any>{
+    return this.http.get<any>(`https://swapi.dev/api/${datatype}/?page=${page}`)
+    .pipe(
+      map(data => Object.values(data))
+    );
+    }
+
+  getDataByIndex(datatype: string, input: any): Observable<any>{
     return this.http.get<any>(`https://swapi.dev/api/${datatype}/${input}`)
     .pipe(
-      tap(console.log),
       map(data => Object.values(data))
     );
     }
@@ -29,7 +35,6 @@ export class DatafetchService {
   getDataByName(datatype: string, name: string): Observable<any>{
     return this.http.get<any>(`https://swapi.dev/api/${datatype}/?search=${name}`)
     .pipe(
-      tap(console.log),
       map(data => Object.values(data))
     );
     }
