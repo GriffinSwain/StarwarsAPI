@@ -23,8 +23,11 @@ export class DataTableComponent implements OnInit {
 
   @Output() backgroundMusicChange = new EventEmitter<string>();
 
+  @Output() searchByChange = new EventEmitter<string>();
+
   paginationId = 'data-table-pagination';
-  totalItems: number = 0;
+  totalItems: number = 60;
+  totalPages: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 5;
   collectionSize: number;
@@ -40,6 +43,7 @@ export class DataTableComponent implements OnInit {
 
   constructor(private datafetchService: DatafetchService) {
     this.collectionSize = 0;
+    this.totalItems = 0;
     this.tableData = new MatTableDataSource<any>();
     this.peopleButton = 'star-wars-button-selected';
     this.planetsButton = 'star-wars-button';
@@ -58,25 +62,43 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadData(this.searchBy, this.currentPage);
+    console.log(this.totalItems);
+    this.getNumberPages()
+    this.getPageNumbers();
   }
 
   loadData(datatype: string, page: number) {
     this.datafetchService.getDataByPages(datatype, page).subscribe((data) => {
-      console.log(data); // Log the complete response data
+      console.log(data[0]);
+      this.totalItems = data[0];
       this.tableData = new MatTableDataSource<any>(data[3]);
       // this.tableData = data[3];
+      // this.getPageNumbers()
       console.log(this.tableData);
+      this.getNumberPages();
     });
   }
 
-  pageChanged(event: any) {
-    this.currentPage = event;
-    this.loadData(this.searchBy, this.currentPage);
+  getNumberPages() {
+    this.totalPages = Math.ceil(this.totalItems / 10);
+  }
+
+  getPageNumbers(): number[] {
+    const pageNumbers: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pageNumbers.push(i);
+    }
+    console.log(this.totalPages)
+    console.log(pageNumbers);
+    return pageNumbers;
   }
 
   peopleSearch() {
     this.buttonSelected('people');
+    this.currentPage = 1;
     this.backgroundMusicChange.emit('people');
+    this.searchBy = 'people';
+    this.searchByChange.emit(this.searchBy);
     this.headerArray = 0;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
@@ -86,17 +108,23 @@ export class DataTableComponent implements OnInit {
 
   planetSearch() {
     this.buttonSelected('planets');
+    this.currentPage = 1;
     this.backgroundMusicChange.emit('planets');
+    this.searchByChange.emit(this.searchBy);
+    this.searchBy = 'planets';
     this.headerArray = 1;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
-    );
-    this.loadData('planets', 1);
-  }
+      );
+      this.loadData('planets', 1);
+    }
 
-  starshipSearch() {
-    this.buttonSelected('starships');
-    this.backgroundMusicChange.emit('starships');
+    starshipSearch() {
+      this.buttonSelected('starships');
+      this.currentPage = 1;
+      this.backgroundMusicChange.emit('starships');
+      this.searchByChange.emit(this.searchBy);
+      this.searchBy = 'starships';
     this.headerArray = 2;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
@@ -108,6 +136,9 @@ export class DataTableComponent implements OnInit {
     this.planetsButton = 'star-wars-button';
     this.peopleButton = 'star-wars-button';
     this.starshipsButton = 'star-wars-button';
+    this.tableData = new MatTableDataSource<any>();
+    this.totalPages = 0;
+    this.getPageNumbers();
 
     switch (selectedButton) {
       case 'people':
@@ -122,6 +153,11 @@ export class DataTableComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  buttonTest(page: number){
+    this.loadData(this.searchBy, page);
+    this.currentPage = page;
   }
 
   async fetchDataTable(

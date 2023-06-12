@@ -1,0 +1,8 @@
+.search-button {
+  background-color: #787878;
+  color: #ffd700;
+  border: 2px solid black;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}

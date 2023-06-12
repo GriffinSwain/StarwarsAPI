@@ -1,11 +1,16 @@
 
-<div class="button-container">
-  <button mat-button [ngClass]='peopleButton' (click)="peopleSearch()">Peruse Persons</button>
-  <button mat-button [ngClass]='planetsButton' (click)="planetSearch()">Probe Planets</button>
-  <button mat-button [ngClass]='starshipsButton' (click)="starshipSearch()">Search Starships</button>
+<div class="flex justify-between">
+  <div class="button-container">
+    <button mat-button [ngClass]="peopleButton" (click)="peopleSearch()">Peruse Persons</button>
+    <button mat-button [ngClass]="planetsButton" (click)="planetSearch()">Probe Planets</button>
+    <button mat-button [ngClass]="starshipsButton" (click)="starshipSearch()">Search Starships</button>
+  </div>
+  <div class="search-container">
+    <app-search-component></app-search-component>
+  </div>
 </div>
 
-<table mat-table [dataSource]="tableData" style="background-color: rgba(255, 165, 91, 0.4);">
+<table mat-table [dataSource]="tableData" class="mt-5" style="background-color: rgba(255, 165, 91, 0.4);" >
 
   <ng-container *ngFor="let header of Headers[headerArray]" [matColumnDef]="header.colDef">
     <th mat-header-cell *matHeaderCellDef><strong>{{ header.name }}</strong></th>
@@ -18,12 +23,8 @@
   <!-- Data rows -->
   <tr mat-row *matRowDef="let row; columns: columns;" class="dataRow"></tr>
 </table>
-<div class="pagination">
-  <div class="pagination">
-    <div class="pagination">
-      <pagination-controls
-    (pageChange)="loadData(searchBy, $event)">
-  </pagination-controls>
-    </div>
-  </div>
+<div class="flex justify-center button-container" *ngIf="tableData.data">
+  <button class="star-wars-button" *ngFor="let page of getPageNumbers(); let i = index" (click)="buttonTest(page)" [ngClass]="{ 'star-wars-button-selected': currentPage === i+1, 'star-wars-button': currentPage !== i+1 }" mat-button>
+    {{ page }}
+  </button>
 </div>

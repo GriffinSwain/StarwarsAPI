@@ -6,8 +6,6 @@
   background-color: #787878;
   color: #ffd700;
   border: 2px solid black;
-  padding: 5px;
-  border-right: 15px;
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease;
@@ -17,8 +15,8 @@
   background-color: #ffd700;
   color: #000000;
   border: 2px solid black;
-  padding: 5px;
-  border-right: 15px;
+  /* padding: 5px;
+  border-right: 15px; */
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease;
@@ -30,6 +28,7 @@
 }
 
 .button-container {
+  margin-top: 5px;
   display: flex;
   gap: 10px;
 }

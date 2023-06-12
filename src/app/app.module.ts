@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   declarations: [
     AppComponent,
     DataTableComponent,
+    SearchComponentComponent,
     SearchComponentComponent
   ],
   imports: [
