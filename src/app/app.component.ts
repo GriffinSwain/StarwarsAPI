@@ -47,21 +47,6 @@ export class AppComponent implements OnInit {
         break;
     }
   }
-  searchByIndex(field: string, index: number) {
-    this.stopAllAudio();
-    this.bodyClass = 'backgroundBg';
-    this.music1.play();
-    this.datafetchService.getDataByIndex(field, index).subscribe((data) => {
-    });
-  }
-
-  searchByName(field: string, name: string) {
-    this.stopAllAudio();
-    this.music2.play();
-    this.bodyClass = 'backgroundBg2';
-    this.datafetchService.getDataByName(field, name).subscribe((data) => {
-    });
-  }
 
   stopAllAudio() {
     this.music1.pause();

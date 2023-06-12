@@ -1,17 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatafetchService } from '../services/datafetch.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
   selector: 'app-search-component',
   templateUrl: './search-component.component.html',
-  styleUrls: ['./search-component.component.css']
+  styleUrls: ['./search-component.component.css'],
+  providers: [DatafetchService]
 })
 export class SearchComponentComponent {
   userSearch: string = '';
-  searchBy: string = 'index';
+
+  @Output() searchButtonClick = new EventEmitter<{userSearch: string }>();
 
   @Input() receivedCategory: string;
+
 
   constructor(private datafetchService: DatafetchService) {
     this.receivedCategory = 'people';
@@ -21,18 +25,12 @@ export class SearchComponentComponent {
     this.userSearch = (event.target as HTMLInputElement).value;
   }
 
-  onSelectChange(event: Event) {
-    this.searchBy = (event.target as HTMLSelectElement).value;
-  }
+
 
   onSearchButtonClick() {
-    // this.onCategoryChange(); // Add parentheses here
-    console.log(this.searchBy + this.userSearch + this.receivedCategory);
-    this.datafetchService.getDataByName(this.userSearch, this.searchBy);
-  }
 
-  // onCategoryChange(category: string) {
-  //   this.receivedCategory = category;
-  // }
+    this.searchButtonClick.emit({ userSearch: this.userSearch });
+
+  }
 
 }

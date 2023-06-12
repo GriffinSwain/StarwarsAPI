@@ -22,9 +22,9 @@ export class DatafetchService {
       .pipe(map((data) => Object.values(data)));
   }
 
-  getDataByName(datatype: string, name: string): Observable<any> {
+  getDataByName(datatype: string, name: string, page: number): Observable<any> {
     return this.http
-      .get<any>(`https://swapi.dev/api/${datatype}/?search=${name}`)
+      .get<any>(`https://swapi.dev/api/${datatype}/?search=${name}&page=${page}`)
       .pipe(map((data) => Object.values(data)));
   }
 }

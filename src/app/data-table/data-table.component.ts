@@ -26,7 +26,7 @@ export class DataTableComponent implements OnInit {
   @Output() categorySearchChange = new EventEmitter<string>();
 
   paginationId = 'data-table-pagination';
-  totalItems: number = 60;
+  totalItems: number = 0;
   totalPages: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -36,6 +36,8 @@ export class DataTableComponent implements OnInit {
   peopleButton = 'star-wars-button-selected';
   planetsButton = 'star-wars-button';
   starshipsButton = 'star-wars-button';
+  search = false;
+  searchValue = '';
   Headers = Headers.Headers;
   columns = Headers.Headers[0].map((header) => header.colDef);
 
@@ -64,6 +66,19 @@ export class DataTableComponent implements OnInit {
     });
   }
 
+  searchResults( userSearch: any) {
+    this.searchValue= userSearch;
+    this.currentPage = 1;
+    this.datafetchService.getDataByName(this.categorySearch, userSearch, this.currentPage).subscribe((data) => {
+      this.totalItems = data[0];
+      this.tableData = new MatTableDataSource<any>(data[3]);
+      this.getNumberPages();
+      console.log("total "+this.totalPages);
+      this.getPageNumbers()
+    });
+    this.search = true;
+  }
+
   getNumberPages() {
     this.totalPages = Math.ceil(this.totalItems / 10);
   }
@@ -73,6 +88,7 @@ export class DataTableComponent implements OnInit {
     for (let i = 1; i <= this.totalPages; i++) {
       pageNumbers.push(i);
     }
+    console.log(pageNumbers);
     return pageNumbers;
   }
 
@@ -116,6 +132,7 @@ export class DataTableComponent implements OnInit {
   }
 
   buttonSelected(selectedButton: string) {
+    this.search = false;
     this.planetsButton = 'star-wars-button';
     this.peopleButton = 'star-wars-button';
     this.starshipsButton = 'star-wars-button';
@@ -142,26 +159,20 @@ export class DataTableComponent implements OnInit {
 
   pageButton(page: number){
     this.tableData = new MatTableDataSource<any>();
-    this.loadData(this.categorySearch, page);
-    this.currentPage = page;
-  }
-
-  async fetchDataTable(
-    datatype: string,
-    info: any,
-    type: string
-  ): Promise<void> {
-    if (type == 'index') {
-      this.datafetchService.getDataByIndex(datatype, info).subscribe((data) => {
-        this.tableData.data = data;
+    if (!this.search){
+      this.loadData(this.categorySearch, page);
+      this.currentPage = page;
+    }else{
+      console.log('search page' + this.categorySearch + this.searchValue)
+      this.currentPage = page;
+      this.datafetchService.getDataByName(this.categorySearch, this.searchValue, page).subscribe((data) => {
+        this.totalItems = data[0];
+        this.tableData = new MatTableDataSource<any>(data[3]);
+        this.getNumberPages();
+        this.getPageNumbers();
+        console.log(data[0]);
       });
-    } else {
-      this.datafetchService
-        .getDataByName(datatype, info)
-        .pipe(first())
-        .subscribe((data) => {
-          this.tableData.data = data;
-        });
     }
   }
+
 }
