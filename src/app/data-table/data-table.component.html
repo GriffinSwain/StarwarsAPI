@@ -1,7 +1,9 @@
 
-<button mat-button [ngClass]='peopleButton' (click)="peopleSearch()">Person Peruse</button>
-<button mat-button [ngClass]='planetsButton' (click)="planetSearch()">Planet Probe</button>
-<button mat-button [ngClass]='starshipsButton' (click)="starshipSearch()">Starship Search</button>
+<div class="button-container">
+  <button mat-button [ngClass]='peopleButton' (click)="peopleSearch()">Peruse Persons</button>
+  <button mat-button [ngClass]='planetsButton' (click)="planetSearch()">Probe Planets</button>
+  <button mat-button [ngClass]='starshipsButton' (click)="starshipSearch()">Search Starships</button>
+</div>
 
 <table mat-table [dataSource]="tableData" style="background-color: rgba(255, 165, 91, 0.4);">
 
@@ -15,5 +17,13 @@
 
   <!-- Data rows -->
   <tr mat-row *matRowDef="let row; columns: columns;" class="dataRow"></tr>
-
-</table>   
+</table>
+<div class="pagination">
+  <div class="pagination">
+    <div class="pagination">
+      <pagination-controls
+    (pageChange)="loadData(searchBy, $event)">
+  </pagination-controls>
+    </div>
+  </div>
+</div>

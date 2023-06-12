@@ -9,9 +9,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchComponentComponent } from './search-component/search-component.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { SearchComponentComponent } from './search-component/search-component.co
     MatTabsModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule,
+    NgxPaginationModule,
     MatButtonModule
   ],
   providers: [],

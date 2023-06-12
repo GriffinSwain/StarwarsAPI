@@ -45,7 +45,7 @@ export const Headers = {
       colDef: 'population',
     },
     {
-      name: 'Roation Period',
+      name: 'Rotation Period',
       colDef: 'rotation_period',
     }
     ],
