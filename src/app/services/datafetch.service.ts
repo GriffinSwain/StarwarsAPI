@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators/map';
-import { tap } from 'rxjs/internal/operators/tap';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -10,18 +9,14 @@ import { Observable } from 'rxjs/internal/Observable';
 export class DatafetchService {
   constructor(private http: HttpClient) {}
 
+  // This function calls the API by page number
   getDataByPages(datatype: string, page: number): Observable<any> {
     return this.http
       .get<any>(`https://swapi.dev/api/${datatype}/?page=${page}`)
       .pipe(map((data) => Object.values(data)));
   }
 
-  getDataByIndex(datatype: string, input: any): Observable<any> {
-    return this.http
-      .get<any>(`https://swapi.dev/api/${datatype}/${input}`)
-      .pipe(map((data) => Object.values(data)));
-  }
-
+  // This function calls the API by search query, as well as page number if the user wants to look past the first page
   getDataByName(datatype: string, name: string, page: number): Observable<any> {
     return this.http
       .get<any>(`https://swapi.dev/api/${datatype}/?search=${name}&page=${page}`)

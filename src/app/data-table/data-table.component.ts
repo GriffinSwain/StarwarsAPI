@@ -1,16 +1,8 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DatafetchService } from '../services/datafetch.service';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs';
-import {NgxPaginationModule} from 'ngx-pagination';
-import { PaginationControlsComponent } from 'ngx-pagination';
 import { MatTableDataSource } from '@angular/material/table';
 import { Headers } from '../Constants/headers-constant';
-
-function DataFetch(http: HttpClient) {
-  return new DatafetchService(http);
-}
 
 @Component({
   selector: 'data-table',
@@ -52,46 +44,51 @@ export class DataTableComponent implements OnInit {
     this.starshipsButton = 'star-wars-button';
   }
 
+  // Loads the data from the API and gets buttons to display
   ngOnInit() {
     this.loadData(this.categorySearch, this.currentPage);
-    this.getNumberPages()
-    this.getPageNumbers();
+    this.getTotalNumberPages()
+    this.getArrayOfPages();
   }
 
+  // Loads data from the API based on the parameters of datatype (people, planets, or starships) and displays it & buttons
   loadData(datatype: string, page: number) {
     this.datafetchService.getDataByPages(datatype, page).subscribe((data) => {
       this.totalItems = data[0];
       this.tableData = new MatTableDataSource<any>(data[3]);
-      this.getNumberPages();
+      this.getTotalNumberPages();
     });
   }
 
+  // Gets value from user input and displays the search result based on that input
+  // This is only ran the first time a user searches something so currentpage is set to 1
   searchResults( userSearch: any) {
     this.searchValue= userSearch;
     this.currentPage = 1;
     this.datafetchService.getDataByName(this.categorySearch, userSearch, this.currentPage).subscribe((data) => {
       this.totalItems = data[0];
       this.tableData = new MatTableDataSource<any>(data[3]);
-      this.getNumberPages();
-      console.log("total "+this.totalPages);
-      this.getPageNumbers()
+      this.getTotalNumberPages();
+      this.getArrayOfPages()
     });
     this.search = true;
   }
 
-  getNumberPages() {
+  // This finds the total number of pages (10 results per page) that the data can fill
+  getTotalNumberPages() {
     this.totalPages = Math.ceil(this.totalItems / 10);
   }
 
-  getPageNumbers(): number[] {
+  // This makes an array of the total number of pages for the button's Ngfor to display
+  getArrayOfPages(): number[] {
     const pageNumbers: number[] = [];
     for (let i = 1; i <= this.totalPages; i++) {
       pageNumbers.push(i);
     }
-    console.log(pageNumbers);
     return pageNumbers;
   }
 
+  // This is for when the user searches by people. It calles the api and changes the background and music according to which category it is.
   peopleSearch() {
     this.categorySearch = 'people';
     this.buttonSelected('people');
@@ -105,6 +102,7 @@ export class DataTableComponent implements OnInit {
     this.loadData('people', 1);
   }
 
+  // This is for when the user searches by planets. It calles the api and changes the background and music according to which category it is.
   planetSearch() {
     this.categorySearch = 'planets';
     this.buttonSelected('planets');
@@ -118,6 +116,7 @@ export class DataTableComponent implements OnInit {
       this.loadData('planets', 1);
     }
 
+   // This is for when the user searches by planets. It calles the api and changes the background and music according to which category it is.
     starshipSearch() {
       this.categorySearch = 'starships';
       this.buttonSelected('starships');
@@ -131,16 +130,17 @@ export class DataTableComponent implements OnInit {
     this.loadData('starships', 1);
   }
 
+  // This checks which button has been pressed and gives it a selected color so the user knows what option has been selected
   buttonSelected(selectedButton: string) {
     this.search = false;
     this.planetsButton = 'star-wars-button';
     this.peopleButton = 'star-wars-button';
     this.starshipsButton = 'star-wars-button';
     this.tableData = new MatTableDataSource<any>();
-    console.log(this.categorySearch);
+
     this.categorySearchChange.emit(this.categorySearch);
     this.totalPages = 0;
-    this.getPageNumbers();
+    this.getArrayOfPages();
 
     switch (selectedButton) {
       case 'people':
@@ -157,6 +157,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
+  // This is called when a page button is pressed. It checks if the user has searched or if all the data is being displayed.
   pageButton(page: number){
     this.tableData = new MatTableDataSource<any>();
     if (!this.search){
@@ -168,8 +169,8 @@ export class DataTableComponent implements OnInit {
       this.datafetchService.getDataByName(this.categorySearch, this.searchValue, page).subscribe((data) => {
         this.totalItems = data[0];
         this.tableData = new MatTableDataSource<any>(data[3]);
-        this.getNumberPages();
-        this.getPageNumbers();
+        this.getTotalNumberPages();
+        this.getArrayOfPages();
         console.log(data[0]);
       });
     }

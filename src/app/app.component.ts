@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // This function changes both the background and music played when the user selects from the three different categories
   public backgroundMusic(searchBy:string): void{
     this.stopAllAudio();
     switch(searchBy){
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // This function just stops all audio from playing
   stopAllAudio() {
     this.music1.pause();
     this.music2.pause();

@@ -23,8 +23,11 @@
   <!-- Data rows -->
   <tr mat-row *matRowDef="let row; columns: columns;" class="dataRow"></tr>
 </table>
+
+<!-- Pagination Container -->
 <div class="flex justify-center button-container" *ngIf="tableData.data">
-  <button class="star-wars-button" *ngFor="let page of getPageNumbers(); let i = index" (click)="pageButton(page)" [ngClass]="{ 'star-wars-button-selected': currentPage === i+1, 'star-wars-button': currentPage !== i+1 }" mat-button>
+  <!-- Makes # of buttons equal to # of results/10 (to ceiling) -->
+  <button class="star-wars-button" *ngFor="let page of getArrayOfPages(); let i = index" (click)="pageButton(page)" [ngClass]="{ 'star-wars-button-selected': currentPage === i+1, 'star-wars-button': currentPage !== i+1 }" mat-button>
     {{ page }}
   </button>
 </div>
