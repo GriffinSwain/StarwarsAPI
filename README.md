@@ -1,3 +1,8 @@
+This little app is designed to get data from the StarWarsAPI (https://swapi.dev) and display it to the user.
+You can see all the data for people, planets, and starships from the Star Wars universe.
+Enjoy the jams!
+
+
 # StarwarsAPI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
