@@ -1,6 +1,8 @@
-<input placeholder="Search People" class="mr-3 ml-40">
-<select class="mr-3">
+<div>
+  <input placeholder="Search People" class="mr-3 ml-40" (input)="onInputChange($event)">
+  <select class="mr-3" (change)="onSelectChange($event)">
     <option selected value="index">Index</option>
     <option value="name">Name</option>
-</select>
-<button class="search-button" mat-button>Search</button>
+  </select>
+  <button class="search-button" mat-button (click)="onSearchButtonClick()">Search</button>
+</div>

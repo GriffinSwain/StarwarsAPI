@@ -23,7 +23,7 @@ export class DataTableComponent implements OnInit {
 
   @Output() backgroundMusicChange = new EventEmitter<string>();
 
-  @Output() searchByChange = new EventEmitter<string>();
+  @Output() categorySearchChange = new EventEmitter<string>();
 
   paginationId = 'data-table-pagination';
   totalItems: number = 60;
@@ -32,7 +32,7 @@ export class DataTableComponent implements OnInit {
   itemsPerPage: number = 5;
   collectionSize: number;
   headerArray = 0;
-  searchBy = 'people';
+  categorySearch = 'people';
   peopleButton = 'star-wars-button-selected';
   planetsButton = 'star-wars-button';
   starshipsButton = 'star-wars-button';
@@ -50,31 +50,16 @@ export class DataTableComponent implements OnInit {
     this.starshipsButton = 'star-wars-button';
   }
 
-  logData() {
-    console.log(this.Headers);
-    console.log(
-      Headers.Headers[this.headerArray].map((header) => header.colDef)
-    );
-    console.log(Headers.Headers[0].map((header) => header.colDef));
-    console.log(Headers.Headers[1].map((header) => header.colDef));
-    console.log(Headers.Headers[2].map((header) => header.colDef));
-  }
-
   ngOnInit() {
-    this.loadData(this.searchBy, this.currentPage);
-    console.log(this.totalItems);
+    this.loadData(this.categorySearch, this.currentPage);
     this.getNumberPages()
     this.getPageNumbers();
   }
 
   loadData(datatype: string, page: number) {
     this.datafetchService.getDataByPages(datatype, page).subscribe((data) => {
-      console.log(data[0]);
       this.totalItems = data[0];
       this.tableData = new MatTableDataSource<any>(data[3]);
-      // this.tableData = data[3];
-      // this.getPageNumbers()
-      console.log(this.tableData);
       this.getNumberPages();
     });
   }
@@ -88,17 +73,15 @@ export class DataTableComponent implements OnInit {
     for (let i = 1; i <= this.totalPages; i++) {
       pageNumbers.push(i);
     }
-    console.log(this.totalPages)
-    console.log(pageNumbers);
     return pageNumbers;
   }
 
   peopleSearch() {
+    this.categorySearch = 'people';
     this.buttonSelected('people');
     this.currentPage = 1;
     this.backgroundMusicChange.emit('people');
-    this.searchBy = 'people';
-    this.searchByChange.emit(this.searchBy);
+    this.categorySearchChange.emit(this.categorySearch);
     this.headerArray = 0;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
@@ -107,11 +90,11 @@ export class DataTableComponent implements OnInit {
   }
 
   planetSearch() {
+    this.categorySearch = 'planets';
     this.buttonSelected('planets');
     this.currentPage = 1;
     this.backgroundMusicChange.emit('planets');
-    this.searchByChange.emit(this.searchBy);
-    this.searchBy = 'planets';
+    this.categorySearchChange.emit(this.categorySearch);
     this.headerArray = 1;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
@@ -120,11 +103,11 @@ export class DataTableComponent implements OnInit {
     }
 
     starshipSearch() {
+      this.categorySearch = 'starships';
       this.buttonSelected('starships');
       this.currentPage = 1;
       this.backgroundMusicChange.emit('starships');
-      this.searchByChange.emit(this.searchBy);
-      this.searchBy = 'starships';
+      this.categorySearchChange.emit(this.categorySearch);
     this.headerArray = 2;
     this.columns = Headers.Headers[this.headerArray].map(
       (header) => header.colDef
@@ -137,6 +120,8 @@ export class DataTableComponent implements OnInit {
     this.peopleButton = 'star-wars-button';
     this.starshipsButton = 'star-wars-button';
     this.tableData = new MatTableDataSource<any>();
+    console.log(this.categorySearch);
+    this.categorySearchChange.emit(this.categorySearch);
     this.totalPages = 0;
     this.getPageNumbers();
 
@@ -155,8 +140,9 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  buttonTest(page: number){
-    this.loadData(this.searchBy, page);
+  pageButton(page: number){
+    this.tableData = new MatTableDataSource<any>();
+    this.loadData(this.categorySearch, page);
     this.currentPage = page;
   }
 
@@ -168,7 +154,6 @@ export class DataTableComponent implements OnInit {
     if (type == 'index') {
       this.datafetchService.getDataByIndex(datatype, info).subscribe((data) => {
         this.tableData.data = data;
-        console.log(this.tableData.data);
       });
     } else {
       this.datafetchService

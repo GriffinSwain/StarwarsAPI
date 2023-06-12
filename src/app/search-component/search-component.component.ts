@@ -10,6 +10,7 @@ import { DatafetchService } from '../services/datafetch.service';
 export class SearchComponentComponent {
   userSearch: string = '';
   searchBy: string = 'index';
+  receivedCategory: string = '';
 
   constructor(private datafetchService: DatafetchService) {
   }
@@ -23,6 +24,13 @@ export class SearchComponentComponent {
   }
 
   onSearchButtonClick() {
+    this.onSearchByChange;
+    console.log(this.searchBy + this.userSearch + this.receivedCategory + this.searchBy);
     this.datafetchService.getDataByName(this.userSearch, this.searchBy);
   }
+
+  onSearchByChange(searchBy: string) {
+    this.receivedCategory = searchBy;
+  }
+
 }

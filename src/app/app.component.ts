@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
 
   public backgroundMusic(searchBy:string): void{
     this.stopAllAudio();
-    console.log("bgmusic called");
     switch(searchBy){
       case "people":
         this.bodyClass="backgroundBg3"
@@ -52,9 +51,7 @@ export class AppComponent implements OnInit {
     this.stopAllAudio();
     this.bodyClass = 'backgroundBg';
     this.music1.play();
-    console.log('Pressed');
     this.datafetchService.getDataByIndex(field, index).subscribe((data) => {
-      console.log(data);
     });
   }
 
@@ -62,9 +59,7 @@ export class AppComponent implements OnInit {
     this.stopAllAudio();
     this.music2.play();
     this.bodyClass = 'backgroundBg2';
-    console.log('Pressed');
     this.datafetchService.getDataByName(field, name).subscribe((data) => {
-      console.log(data);
     });
   }
 
@@ -74,8 +69,4 @@ export class AppComponent implements OnInit {
     this.music3.pause();
   }
 
-  onDropdownChange(query: any){
-    this.searchType = query.target.value;
-    console.log(this.searchType);
-  }
 }

@@ -24,7 +24,7 @@
   <tr mat-row *matRowDef="let row; columns: columns;" class="dataRow"></tr>
 </table>
 <div class="flex justify-center button-container" *ngIf="tableData.data">
-  <button class="star-wars-button" *ngFor="let page of getPageNumbers(); let i = index" (click)="buttonTest(page)" [ngClass]="{ 'star-wars-button-selected': currentPage === i+1, 'star-wars-button': currentPage !== i+1 }" mat-button>
+  <button class="star-wars-button" *ngFor="let page of getPageNumbers(); let i = index" (click)="pageButton(page)" [ngClass]="{ 'star-wars-button-selected': currentPage === i+1, 'star-wars-button': currentPage !== i+1 }" mat-button>
     {{ page }}
   </button>
 </div>
