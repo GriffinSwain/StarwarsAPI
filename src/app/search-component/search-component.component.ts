@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DatafetchService } from '../services/datafetch.service';
 
 
@@ -10,9 +10,11 @@ import { DatafetchService } from '../services/datafetch.service';
 export class SearchComponentComponent {
   userSearch: string = '';
   searchBy: string = 'index';
-  receivedCategory: string = '';
+
+  @Input() receivedCategory: string;
 
   constructor(private datafetchService: DatafetchService) {
+    this.receivedCategory = 'people';
   }
 
   onInputChange(event: Event) {
@@ -24,13 +26,13 @@ export class SearchComponentComponent {
   }
 
   onSearchButtonClick() {
-    this.onSearchByChange;
-    console.log(this.searchBy + this.userSearch + this.receivedCategory + this.searchBy);
+    // this.onCategoryChange(); // Add parentheses here
+    console.log(this.searchBy + this.userSearch + this.receivedCategory);
     this.datafetchService.getDataByName(this.userSearch, this.searchBy);
   }
 
-  onSearchByChange(searchBy: string) {
-    this.receivedCategory = searchBy;
-  }
+  // onCategoryChange(category: string) {
+  //   this.receivedCategory = category;
+  // }
 
 }

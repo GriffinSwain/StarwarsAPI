@@ -6,7 +6,7 @@
     <button mat-button [ngClass]="starshipsButton" (click)="starshipSearch()">Search Starships</button>
   </div>
   <div class="search-container">
-    <app-search-component></app-search-component>
+    <app-search-component [receivedCategory]="categorySearch"></app-search-component>
   </div>
 </div>
 
