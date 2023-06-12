@@ -12,6 +12,13 @@
   min-height: 100vh;
 }
 
+.backgroundBg3{
+  background-image: url(../assets/CantinaCharacters.png);
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
 .star-wars-button {
   background-color: #787878;
   color: #ffd700;
@@ -22,8 +29,12 @@
   transition: background-color 0.3s ease;
 }
 
-.star-wars-button:hover {
+.star-wars-button-selected {
   background-color: #ffd700;
-  color: #000;
+  color: #000000;
+  border: 2px solid black;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
-

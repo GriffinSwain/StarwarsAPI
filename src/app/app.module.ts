@@ -11,12 +11,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchComponentComponent } from './search-component/search-component.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataTableComponent
+    DataTableComponent,
+    SearchComponentComponent
   ],
   imports: [
     BrowserModule,

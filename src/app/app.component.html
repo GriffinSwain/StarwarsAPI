@@ -1,14 +1,12 @@
 <body [ngClass]="bodyClass">
 <div class="columns-5"></div>
 <div class="container px-40 mt-5">
-  <select (change)="onDropdownChange($event)">
+  <!-- <select (change)="onDropdownChange($event)">
     <option selected value="index">Index</option>
     <option value="name">Name</option>
-  </select>
-  <button mat-button class="star-wars-button" (click)="searchByIndex('people', 5)">Peruse Persons</button>
-  <button mat-button class="star-wars-button" (click)="searchByName('people', 'O')">Planet Probe</button>
-  <button mat-button class="star-wars-button" (click)="searchByName('people', 'O')">Starship Search</button>
-  <data-table></data-table>
+  </select> -->
+
+  <data-table (backgroundMusicChange)="backgroundMusic($event)"></data-table>
 </div>
 
 </body>

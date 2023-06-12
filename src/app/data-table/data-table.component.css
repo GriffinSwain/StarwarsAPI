@@ -1,3 +1,28 @@
 .dataRow{
   border: 2px solid black;
 }
+
+.star-wars-button {
+  background-color: #787878;
+  color: #ffd700;
+  border: 2px solid black;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.star-wars-button-selected {
+  background-color: #ffd700;
+  color: #000000;
+  border: 2px solid black;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.star-wars-button:hover {
+  background-color: #ff9100;
+  color: #000;
+}
